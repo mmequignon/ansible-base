@@ -1,0 +1,27 @@
+---
+
+- name: Add admin user
+  user: name="{{admin_username}}"
+        shell=/bin/bash
+        groups="sudo"
+
+- file:
+    path: /etc/sudoers.d/
+    state: directory
+
+- file:
+    path: /etc/sudoers.d/admin
+    state: touch
+
+- name: Allow admin to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers.d/admin
+    state: present
+    line: 'admin ALL=(ALL) NOPASSWD: ALL'
+
+- name: Push SSH keys to admin
+  authorized_key: user={{admin_username}}
+                  key="{{item}}"
+  with_file:
+      - "{{ admin_authorized_keys }}"
+  when: admin_authorized_keys is defined

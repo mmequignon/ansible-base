@@ -1,0 +1,5 @@
+---
+
+- include: install-usual-tools.yml
+
+- include: admin.yml
