@@ -2,6 +2,7 @@
 
 basic_required_packages:
     - git
+    - sudo
     - wget
     - vim-nox
     - htop
