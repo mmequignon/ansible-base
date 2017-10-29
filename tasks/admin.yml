@@ -10,14 +10,14 @@
     state: directory
 
 - file:
-    path: /etc/sudoers.d/admin
+    path: "/etc/sudoers.d/{{ admin_username }}"
     state: touch
 
 - name: Allow admin to have passwordless sudo
   lineinfile:
-    dest: /etc/sudoers.d/admin
+    dest: "/etc/sudoers.d/{{ admin_username }}"
     state: present
-    line: 'admin ALL=(ALL) NOPASSWD: ALL'
+    line: '{{ admin_username }} ALL=(ALL) NOPASSWD: ALL'
 
 - name: Push SSH keys to admin
   authorized_key: user={{admin_username}}
