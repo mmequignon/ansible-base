@@ -1,4 +1,4 @@
 ---
 
 admin_username: admin
-admin_authorized_keys: ""
+admin_authorized_keys: "files/add_your_public_key_here"
