@@ -5,13 +5,21 @@
         shell=/bin/bash
         groups="sudo"
 
-- file:
+- name: Create /etc/sudoers.d/ folder if not exists
+  file:
     path: /etc/sudoers.d/
     state: directory
 
-- file:
+- name: Check if user is already sudoer
+  stat:
+      path: "/etc/sudoers.d/{{ admin_username }}"
+  register: sudoer
+
+- name: "Make {{ admin_username }} sudoer if not already"
+  file:
     path: "/etc/sudoers.d/{{ admin_username }}"
     state: touch
+  when: sudoer.stat.exists == False
 
 - name: Allow admin to have passwordless sudo
   lineinfile:
